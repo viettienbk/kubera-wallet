@@ -1,0 +1,9 @@
+1.
+private key: c0de32a91b219c52ecd3c5a4bb167e5426cad747917c3867102fc6515498bb41
+address: 0x0f816ba0d79ebb478fc86c1e0901460e5b43bfee
+wallet: {"address":"0f816ba0d79ebb478fc86c1e0901460e5b43bfee","crypto":{"cipher":"aes-128-ctr","ciphertext":"b71136d6f22d03f0b2aac5218e7a2854f7dfdbb361954559647f12009082f9b2","cipherparams":{"iv":"08f37f9d1538cd5c66ab991afc837313"},"mac":"edbfae7bde7390814421bd285a92a24138e083183fd478136361809f6f8f2947","kdf":"pbkdf2","kdfparams":{"c":262144,"dklen":32,"prf":"hmac-sha256","salt":"6666d7af88a189a515ecda43224fcafdf96d24946ba766ccaa19887f7cbd7c91"}},"id":"53b782ad-86aa-4c69-baf2-25c55002cf59","version":3}
+
+2.
+private key: 1bd064fa537c9fe3acd73e9b2da1eef7c9a48a43aae475e56fc3f64a20a8cf4b
+address: 0xc476316fc934554cdc7ba5abdcb8aefd994d6270
+{"address":"c476316fc934554cdc7ba5abdcb8aefd994d6270","crypto":{"cipher":"aes-128-ctr","ciphertext":"974500ac03c65e67132b75ea80e58ef59173cc39d38dddb3696c9a3eb7bef66c","cipherparams":{"iv":"686e69eaf256b59a752ebfa0f5d335f1"},"mac":"67025afdabd21dca844feae484e51d9c3b876c880a78cfed2dbb5083ffea91ca","kdf":"pbkdf2","kdfparams":{"c":262144,"dklen":32,"prf":"hmac-sha256","salt":"5c6dea992b08d4314046e2c7d481cf34762fd1999a76a63ee9701d366d858c51"}},"id":"20dc46a7-b84d-47f4-bfc2-c2b7f05faa46","version":3}

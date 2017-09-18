@@ -9,39 +9,32 @@ public class FileHandle : MonoBehaviour {
     public Text txtAddress;
     public Text txtToken;
     public Text txtEth;
-    // private Wallet wallet;
+
     private string address;
     private string token;
     private string eth;
-    private bool err;
+    private KuberaWallet kuberaWallet;
 
 	// Use this for initialization
 	void Start () {
-       //  wallet = new Wallet();
-        clear();
+        kuberaWallet = new KuberaWallet();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        /*
-		if(token != "")
+        if (kuberaWallet.isGetEthSuccess())
         {
-            txtToken.text = token;
-            token = "";
-        }
-
-        if (eth != "")
-        {
+            eth = kuberaWallet.getEthVal() + "";
             txtEth.text = eth;
-            eth = "";
         }
 
-        if (err)
+        if (kuberaWallet.isGetTokenSuccess())
         {
-            txtMsg.text = "Invalide wallet";
+            token = kuberaWallet.getTokenVal() + "";
+            Debug.Log(token);
+            txtToken.text = token;
         }
-        */
-	}
+    }
 
     public void backToHome()
     {
@@ -50,39 +43,34 @@ public class FileHandle : MonoBehaviour {
 
     public void importWallet()
     {
-        /*
+        
         clear();
         string fileContent = tfFileContent.text;
         string password = tfPassword.text;
-        wallet.recoverWallet(password, fileContent);
-        address = wallet.walletAddress;
-        txtAddress.text = address;
-
-        if(address != "")
+        bool isSuccess = kuberaWallet.recoverWallet(password, fileContent);
+        
+        if(isSuccess)
         {
-            token = wallet.getTokenBalance(address).Result;
-            eth = wallet.getBalance().Result;
+            address = kuberaWallet.walletAddress;
+            txtAddress.text = address;
+            StartCoroutine(kuberaWallet.getEth(address));
+            StartCoroutine(kuberaWallet.getToken(address));
         }
         else
         {
-            err = true;
+            txtMsg.text = "Error";
         }
-        */
+        
     }
 
     private void clear()
     {
-        //address = "";
-        //token = "";
-        //eth = "";
-        //err = false;
-        //txtMsg.text = "";
-        //txtAddress.text = "";
-        //txtEth.text = "";
-        //txtToken.text = "";
-        //if(wallet != null)
-        //{
-        //    wallet.clearWallet();
-        //}
+        address = "";
+        token = "";
+        eth = "";
+        txtMsg.text = "";
+        txtAddress.text = "";
+        txtEth.text = "";
+        txtToken.text = "";
     }
 }

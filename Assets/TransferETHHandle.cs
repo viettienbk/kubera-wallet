@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Nethereum.Util;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,21 +10,24 @@ public class TransferETHHandle : MonoBehaviour {
     public InputField tfValue;
     public InputField tfPrivatekey;
     private string msg;
+    private KuberaWallet kuberaWallet;
+    private string txId;
 
 	// Use this for initialization
-	void Start () {
-        //wallet = new Wallet();
-        //msg = "";
+	void Start ()
+    {
+        txId = "";
+        kuberaWallet = new KuberaWallet();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		//if(msg != "")
-  //      {
-  //          txtMsg.text = msg;
-  //          Debug.Log(msg);
-  //          msg = "";
-  //      }
+	void Update ()
+    {
+        if (txId == "" && kuberaWallet.isTransferETHSuccess())
+        {
+            txId = kuberaWallet.getTransferEthHash();
+            txtMsg.text = "TransactionId:" + txId;
+        }
 	}
 
     public void backToHome()
@@ -33,14 +37,18 @@ public class TransferETHHandle : MonoBehaviour {
 
     public void transferETH()
     {
-        //wallet.clearWallet();
-        //string to = tfTo.text;
-        //float value = float.Parse(tfValue.text);
-        //string privateKey = tfPrivatekey.text;
-        //wallet.importPrivateKey(privateKey);
-        //if(wallet.walletAddress != "")
-        //{
-        //    msg = wallet.transferETH(to, value).Result;
-        //}
+        Debug.Log("transfer");
+        string to = tfTo.text;
+        string value = tfValue.text;
+        string privateKey = tfPrivatekey.text;
+
+        kuberaWallet.importPrivateKey(privateKey);
+
+        float amount = float.Parse(value);
+        var ether = UnitConversion.Convert.ToWei(amount, UnitConversion.EthUnit.Ether);
+
+        Debug.Log(ether);
+
+        StartCoroutine(kuberaWallet.transferEth(to, ether));
     }
 }

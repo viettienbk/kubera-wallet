@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
+using Nethereum.Util;
 
 public class TransferHandle : MonoBehaviour {
 
@@ -11,38 +12,38 @@ public class TransferHandle : MonoBehaviour {
     public Text txtTransactionId;
 
     private string txId;
+    private KuberaWallet kuberaWallet;
     
     // Use this for initialization
-	void Start () {
-        //wallet = new Wallet();
-        //txId = "";
+	void Start ()
+    {
+        txId = "";
+        kuberaWallet = new KuberaWallet();
     }
 	
 	// Update is called once per frame
-	void Update () {
-		//if(txId != "")
-  //      {
-  //          txtTransactionId.text = txId;
-  //          txId = "";
-  //      }
+	void Update ()
+    {
+        if (txId == "" && kuberaWallet.isTransferTokenSuccess())
+        {
+            txId = kuberaWallet.getTransferTokenHash();
+            txtTransactionId.text = txId;
+        }
 	}
 
     public void transferToken()
     {
-        //string to = tfTo.text;
-        //string value = tfValue.text;
-        //string privateKey = tfPrivatekey.text;
+        string to = tfTo.text;
+        string value = tfValue.text;
+        string privateKey = tfPrivatekey.text;
 
-        //Debug.Log(to);
-        //Debug.Log(privateKey);
+        kuberaWallet.importPrivateKey(privateKey);
 
-        //wallet.importPrivateKey(privateKey);
+        uint amount = uint.Parse(value);
 
-        //uint amount = uint.Parse(value);
-        //Debug.Log(amount);
+        Debug.Log(amount);
 
-        //Debug.Log(wallet.walletAddress);
-        //txId = wallet.transferToken(to, uint.Parse(value)).Result;
+        StartCoroutine(kuberaWallet.transferToken(to, amount));
     }
 
     public void backToHome()

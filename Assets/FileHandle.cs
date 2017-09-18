@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using KuberaWalletLib;
-
 public class FileHandle : MonoBehaviour {
 
     public InputField tfFileContent;
@@ -11,7 +9,7 @@ public class FileHandle : MonoBehaviour {
     public Text txtAddress;
     public Text txtToken;
     public Text txtEth;
-    private Wallet wallet;
+    // private Wallet wallet;
     private string address;
     private string token;
     private string eth;
@@ -19,12 +17,13 @@ public class FileHandle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        wallet = new Wallet();
+       //  wallet = new Wallet();
         clear();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        /*
 		if(token != "")
         {
             txtToken.text = token;
@@ -41,6 +40,7 @@ public class FileHandle : MonoBehaviour {
         {
             txtMsg.text = "Invalide wallet";
         }
+        */
 	}
 
     public void backToHome()
@@ -50,6 +50,7 @@ public class FileHandle : MonoBehaviour {
 
     public void importWallet()
     {
+        /*
         clear();
         string fileContent = tfFileContent.text;
         string password = tfPassword.text;
@@ -66,21 +67,22 @@ public class FileHandle : MonoBehaviour {
         {
             err = true;
         }
+        */
     }
 
     private void clear()
     {
-        address = "";
-        token = "";
-        eth = "";
-        err = false;
-        txtMsg.text = "";
-        txtAddress.text = "";
-        txtEth.text = "";
-        txtToken.text = "";
-        if(wallet != null)
-        {
-            wallet.clearWallet();
-        }
+        //address = "";
+        //token = "";
+        //eth = "";
+        //err = false;
+        //txtMsg.text = "";
+        //txtAddress.text = "";
+        //txtEth.text = "";
+        //txtToken.text = "";
+        //if(wallet != null)
+        //{
+        //    wallet.clearWallet();
+        //}
     }
 }

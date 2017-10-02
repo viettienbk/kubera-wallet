@@ -8,6 +8,9 @@ using Nethereum.Hex.HexConvertors.Extensions;
 using System;
 using System.Numerics;
 using Nethereum.Hex.HexTypes;
+using UnityEngine;
+using Nethereum.Web3;
+using System.Threading.Tasks;
 
 public class KuberaWallet {
 
@@ -20,12 +23,14 @@ public class KuberaWallet {
     private string url = "http://118.69.187.7:8545";
     private string privateKey;
 	public string walletAddress;
+    public string serverAddress;
 
     public KuberaWallet()
     {
         privateKey = "";
         walletAddress = "";
-        tokenAddress = "0xeeb01b6518461b597474db455f9aaa3aced9445b";
+        tokenAddress = "0xb80db791a23b114d93ef0c6d2c20214235da9cb0";
+        serverAddress = "0xdb526bedb534cca762abf049d56c8a103d8dfa95";
         abi = @"[{""constant"":true,""inputs"":[],""name"":""name"",""outputs"":[{""name"":"""",""type"":""string""}],""payable"":false,""type"":""function""},{""constant"":false,""inputs"":[{""name"":""_spender"",""type"":""address""},{""name"":""_value"",""type"":""uint256""}],""name"":""approve"",""outputs"":[{""name"":""success"",""type"":""bool""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""totalSupply"",""outputs"":[{""name"":"""",""type"":""uint256""}],""payable"":false,""type"":""function""},{""constant"":false,""inputs"":[{""name"":""_from"",""type"":""address""},{""name"":""_to"",""type"":""address""},{""name"":""_value"",""type"":""uint256""}],""name"":""transferFrom"",""outputs"":[{""name"":""success"",""type"":""bool""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""decimals"",""outputs"":[{""name"":"""",""type"":""uint8""}],""payable"":false,""type"":""function""},{""constant"":false,""inputs"":[],""name"":""burn"",""outputs"":[],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""standard"",""outputs"":[{""name"":"""",""type"":""string""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[{""name"":"""",""type"":""address""}],""name"":""balanceOf"",""outputs"":[{""name"":"""",""type"":""uint256""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""startTime"",""outputs"":[{""name"":"""",""type"":""uint256""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""owner"",""outputs"":[{""name"":"""",""type"":""address""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""symbol"",""outputs"":[{""name"":"""",""type"":""string""}],""payable"":false,""type"":""function""},{""constant"":false,""inputs"":[{""name"":""_to"",""type"":""address""},{""name"":""_value"",""type"":""uint256""}],""name"":""transfer"",""outputs"":[{""name"":""success"",""type"":""bool""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[],""name"":""game"",""outputs"":[{""name"":"""",""type"":""address""}],""payable"":false,""type"":""function""},{""constant"":true,""inputs"":[{""name"":"""",""type"":""address""},{""name"":"""",""type"":""address""}],""name"":""allowance"",""outputs"":[{""name"":"""",""type"":""uint256""}],""payable"":false,""type"":""function""},{""constant"":false,""inputs"":[{""name"":""gameAddress"",""type"":""address""},{""name"":""value"",""type"":""uint256""}],""name"":""transferToGames"",""outputs"":[{""name"":"""",""type"":""bool""}],""payable"":false,""type"":""function""},{""inputs"":[],""payable"":false,""type"":""constructor""},{""anonymous"":false,""inputs"":[{""indexed"":true,""name"":""from"",""type"":""address""},{""indexed"":true,""name"":""to"",""type"":""address""},{""indexed"":false,""name"":""value"",""type"":""uint256""}],""name"":""Transfer"",""type"":""event""},{""anonymous"":false,""inputs"":[{""indexed"":true,""name"":""owner"",""type"":""address""},{""indexed"":true,""name"":""spender"",""type"":""address""},{""indexed"":false,""name"":""value"",""type"":""uint256""}],""name"":""Approval"",""type"":""event""},{""anonymous"":false,""inputs"":[{""indexed"":false,""name"":""amount"",""type"":""uint256""}],""name"":""Burned"",""type"":""event""}]";
         contract = new Contract(null, abi, tokenAddress);
     }
@@ -124,9 +129,11 @@ public class KuberaWallet {
         var gas = new HexBigInteger("0x493E0".HexToBigInteger(false));
         var value = new HexBigInteger("0x0".HexToBigInteger(false));
 
-        var transactionInput = transfer.CreateTransactionInput(walletAddress, gas, value, new Object[] { _to, _value });
+        var transactionInput = transfer.CreateTransactionInput(walletAddress, gas, value, new System.Object[] { _to, _value });
 
         transactionToken = new TransactionSignedUnityRequest(url, privateKey, walletAddress);
+
+        Debug.Log(transactionToken);
         yield return transactionToken.SignAndSendTransaction(transactionInput);
     }
 
@@ -148,5 +155,28 @@ public class KuberaWallet {
     public string getTransferTokenHash()
     {
         return transactionToken.Result;
+    }
+
+    public EthGetTransactionCountUnityRequest txCount;
+
+    public IEnumerator getTransactionCount()
+    {
+        txCount = new EthGetTransactionCountUnityRequest(url);
+        yield return txCount.SendRequest(walletAddress, BlockParameter.CreateLatest());
+    }
+
+    public string getRawData(uint amount, BigInteger txCount)
+    {
+        var transfer = contract.GetFunction("transfer");
+        var data = transfer.GetData(serverAddress, amount);
+        var gasPrice = BigInteger.Parse("60000000000");
+        var gasLimit = BigInteger.Parse("200000");
+
+        return Web3.OfflineTransactionSigner.SignTransaction(privateKey, tokenAddress, 0, txCount, gasPrice, gasLimit, data);
+    }
+
+    public bool isGetTxCountSuccess()
+    {
+        return txCount != null && txCount.Result != null;
     }
 }

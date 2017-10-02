@@ -29,6 +29,14 @@ public class TransferHandle : MonoBehaviour {
             txId = kuberaWallet.getTransferTokenHash();
             txtTransactionId.text = txId;
         }
+
+        if (kuberaWallet.isGetTxCountSuccess())
+        {
+            Debug.Log(kuberaWallet.txCount.Result.Value);
+            var encoded = kuberaWallet.getRawData(uint.Parse(tfValue.text), kuberaWallet.txCount.Result.Value);
+            Debug.Log(encoded);
+            kuberaWallet.txCount = null;
+        }
 	}
 
     public void transferToken()
@@ -43,7 +51,8 @@ public class TransferHandle : MonoBehaviour {
 
         Debug.Log(amount);
 
-        StartCoroutine(kuberaWallet.transferToken(to, amount));
+        // StartCoroutine(kuberaWallet.transferToken(to, amount));
+        StartCoroutine(kuberaWallet.getTransactionCount());
     }
 
     public void backToHome()

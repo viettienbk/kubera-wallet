@@ -10,7 +10,6 @@ using System.Numerics;
 using Nethereum.Hex.HexTypes;
 using UnityEngine;
 using Nethereum.Web3;
-using System.Threading.Tasks;
 
 public class KuberaWallet {
 
@@ -20,7 +19,8 @@ public class KuberaWallet {
     private EthCallUnityRequest tokenRequest;
     private Contract contract;
     private EthGetBalanceUnityRequest ethRequest;
-    private string url = "http://118.69.187.7:8545";
+    //private string url = "http://118.69.187.7:8545";
+    private string url = "https://ropsten.infura.io/85ZjOdxBYVymaszRc3cf";
     private string privateKey;
 	public string walletAddress;
     public string serverAddress;
@@ -169,10 +169,10 @@ public class KuberaWallet {
     {
         var transfer = contract.GetFunction("transfer");
         var data = transfer.GetData(serverAddress, amount);
-        var gasPrice = BigInteger.Parse("60000000000");
+        var gasPrice = BigInteger.Parse("200000000000"); //  200 GWei
         var gasLimit = BigInteger.Parse("200000");
 
-        return Web3.OfflineTransactionSigner.SignTransaction(privateKey, tokenAddress, 0, txCount, gasPrice, gasLimit, data);
+        return "0x" + Web3.OfflineTransactionSigner.SignTransaction(privateKey, tokenAddress, 0, txCount, gasPrice, gasLimit, data);
     }
 
     public bool isGetTxCountSuccess()

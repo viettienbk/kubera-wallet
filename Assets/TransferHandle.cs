@@ -24,17 +24,20 @@ public class TransferHandle : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        /*
         if (txId == "" && kuberaWallet.isTransferTokenSuccess())
         {
             txId = kuberaWallet.getTransferTokenHash();
             txtTransactionId.text = txId;
         }
+        */
 
         if (kuberaWallet.isGetTxCountSuccess())
         {
             Debug.Log(kuberaWallet.txCount.Result.Value);
             var encoded = kuberaWallet.getRawData(uint.Parse(tfValue.text), kuberaWallet.txCount.Result.Value);
             Debug.Log(encoded);
+            txtTransactionId.text = encoded;
             kuberaWallet.txCount = null;
         }
 	}

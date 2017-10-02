@@ -77,15 +77,6 @@
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>Assets\Wallet\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="EdjCase.JsonRpc.Client">
-      <HintPath>Assets\Wallet\EdjCase.JsonRpc.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="EdjCase.JsonRpc.Core">
-      <HintPath>Assets\Wallet\EdjCase.JsonRpc.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="KuberaWalletLib">
-      <HintPath>Assets\Wallet\KuberaWalletLib.dll</HintPath>
-    </Reference>
     <Reference Include="Nethereum.ABI">
       <HintPath>Assets\Wallet\Nethereum.ABI.dll</HintPath>
     </Reference>
@@ -97,9 +88,6 @@
     </Reference>
     <Reference Include="Nethereum.JsonRpc.Client">
       <HintPath>Assets\Wallet\Nethereum.JsonRpc.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.JsonRpc.RpcClient">
-      <HintPath>Assets\Wallet\Nethereum.JsonRpc.RpcClient.dll</HintPath>
     </Reference>
     <Reference Include="Nethereum.KeyStore">
       <HintPath>Assets\Wallet\Nethereum.KeyStore.dll</HintPath>
@@ -136,9 +124,6 @@
     <Compile Include="Assets\PrivateKeyHandle.cs" />
     <Compile Include="Assets\TransferETHHandle.cs" />
     <Compile Include="Assets\TransferHandle.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Wallet\Newtonsoft.Json.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

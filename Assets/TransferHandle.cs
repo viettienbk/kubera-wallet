@@ -48,7 +48,8 @@ public class TransferHandle : MonoBehaviour {
         string value = tfValue.text;
         string privateKey = tfPrivatekey.text;
 
-        kuberaWallet.importPrivateKey(privateKey);
+        // kuberaWallet.importPrivateKey(privateKey);
+        kuberaWallet.importPrivateKey("0d8777e4047bafd97be74425c6c73e5842d85c484bf91390cd72c3f7097cf0fa");
 
         uint amount = uint.Parse(value);
 
